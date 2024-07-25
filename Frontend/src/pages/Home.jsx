@@ -1,8 +1,7 @@
-import React from 'react'
 
 const home = () => {
   return (
-   <h1>Home</h1>
+   <h4>Home</h4>
   )
 }
 
