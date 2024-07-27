@@ -53,7 +53,7 @@ const Header = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }} height={"3.5rem"}>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ bgcolor: "#453F3C" }}>
           <Toolbar>
             <Button sx={{ color: "white" }} onClick={logoClick}>

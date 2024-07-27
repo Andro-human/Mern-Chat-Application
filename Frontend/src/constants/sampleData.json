@@ -1,0 +1,9 @@
+[
+    {
+    "avatar": ["https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"],
+    "name": "John Doe",
+    "_id": "1",
+    "groupChat": "false",
+    "members": ["1", "2"]
+    }
+]
