@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound';
 import AppLayout from './components/layout/AppLayout';
 import Chat from './pages/Chat';
 
-let user = true;
+let user = false;
 
 const App = () => {
   return (

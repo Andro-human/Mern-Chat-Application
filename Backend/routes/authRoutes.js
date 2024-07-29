@@ -10,6 +10,6 @@ app.post("/login", loginController)
 
 // This is a protected route that requires a valid token to access
 app.get("/profile", authMiddleware, getUserController)      
-app.post("/logout", logoutController)
+app.post("/logout", authMiddleware, logoutController)
 
 module.exports = app;

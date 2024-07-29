@@ -1,21 +1,23 @@
 const userModel = require("../models/userModel");
-const sendToken = require("../utils/webToken");
+const {sendToken, uploadFilesToCloudinary} = require("../utils/features");
 const bcrypt = require("bcryptjs");
 // create a new user and save it to the database and save in cookie
 const newUserController = async (req, res) => {
   try {
     const { name, username, password, bio } = req.body;
 
-    // const avatar = {
-    //   public_id: req.file.filename,
-    //   url: req.file.path,
-    // };
+    const file = req.file; 
+
+    if (!file) return res.status(400).json({ message: "Please upload Avatar" });
+    
+    const result = await uploadFilesToCloudinary([file]);
+    
+    const avatar = {
+      public_id: result[0].public_id,
+      url: result[0].url,
+    };
 
     // console.log(name, username, password, bio);
-    const avatar = {
-      public_id:"sadf",
-      url: "safda",
-    };
 
     const existingUser = await userModel.findOne({ username });
 
@@ -32,7 +34,7 @@ const newUserController = async (req, res) => {
     const user = await userModel.create({
       name,
       username,
-      password:hashedPassword,
+      password: hashedPassword,
       bio,
       avatar,
     });
