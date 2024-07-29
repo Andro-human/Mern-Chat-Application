@@ -25,6 +25,7 @@ app.use(morgan('dev'));    // Log HTTP requests
 
 app.use("/api/auth", require('./routes/authRoutes'));             // Auth routes
 app.use("/api/message", require('./routes/messageRoutes'))       // Message routes
+app.use("/api/users", require('./routes/userRoutes'))               // User routes
 
 const PORT = process.env.PORT || 8080
 
