@@ -16,7 +16,7 @@ const App = () => {
           <Route element={<PrivateRoute user={user} redirect='/login' /> } > 
             <Route element={<AppLayout />} > 
               <Route path="/" element={<Home />} />
-              <Route path='/chat' element={<Chat />} />
+              <Route path='/chat/:chatId' element={<Chat />} />
             </Route>
           </Route>
 

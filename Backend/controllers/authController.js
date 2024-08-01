@@ -85,7 +85,7 @@ const loginController = async (req, res) => {
 const getUserController = async (req, res) => {
   try {
     const user = await userModel.findById({ _id: req.userId });
-
+    console.log(req.userId);
     return res.status(200).json({
       success: true,
       message: "User fectched Successfully",

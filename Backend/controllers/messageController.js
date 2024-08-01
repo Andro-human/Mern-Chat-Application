@@ -52,34 +52,30 @@ const sendMessage = async (req, res) => {
 
 const getMessages = async (req, res) => {
   try {
-    const { id: receiverId } = req.params;
-    const senderId = req.userId;
+    const { id: conversationId } = req.params;
+    const { page = 1 } = req.query;
+    const limit = 20;
+    const skip = (page - 1) * limit;
 
-    if (receiverId === senderId) {
-        return res.status(400).json({
-            success: false,
-            message: "Sender and receiver cannot be the same",
-        });
-    }
-    
-    const conversation = await conversationModel
-      .findOne({
-        members: { $all: [senderId, receiverId] },
-      })
-      .populate("messages");        // not reference but actual messages
+    const [messages, totalMessagesCount] = await Promise.all([ messageModel
+      .find({ conversationId })
+      .populate("senderId", "name")
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(skip)
+      .lean(),
+      messageModel.countDocuments({ conversationId })
+    ])
 
-    if (!conversation) {
-      return res.status(404).json({
-        success: false,
-        message: "No conversation found",
-      });
-    }
+    const totalPages = Math.ceil(totalMessagesCount / limit) || 0;
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Messages fetched successfully",
-      messages: conversation.messages,
+      messages: messages.reverse(),
+      totalPages
     });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -88,6 +84,6 @@ const getMessages = async (req, res) => {
       error,
     });
   }
-};
+}
 
 module.exports = { sendMessage, getMessages };

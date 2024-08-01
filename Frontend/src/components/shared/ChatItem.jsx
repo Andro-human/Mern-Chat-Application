@@ -1,37 +1,45 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { memo } from "react"; // Add this line to import the 'memo' function
+import styled from 'styled-components';
+import AvatarCard from "./AvatarCard";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
 
 const ChatItem = ({
-  avatar = [],
+  avatar,
   name,
   _id,
-  groupChat = false,
-  sameSender,
+//   groupChat = false,
+  sameSender = true,
   isOnline,
-  newMessageAlert,
+//   newMessageAlert,
   index = 0,
-  handleDeleteChatOpen,
+  handleDeleteChat,
 }) => {
   return (
-    <Link to={`chat/${_id}`} onContextMenu={(e) => handleDeleteChatOpen(e, _id, groupChat)} style={{
-        textDecoration: "none",
-        color: "black",
-        padding: 0,
-        "&:hover": {
-            backgroundColor: "#0f0f0f"
-        }
-    }}>
+    <StyledLink to={`chat/${_id}`} onContextMenu={(e) => handleDeleteChat(e, _id)} >
         <div style={{
             display: "flex",
             alignItems: "center",
-            padding: 10,
+            padding: "1rem",
             position: "relative",
-            // backgroundColor: sameSender ? "rgba(0,0,0,0.1)" : "transparent",
+            // gap: "1rem",
+            backgroundColor: sameSender ? "#311E10" : "transparent",
+            color: sameSender ? "white" : "black",
         }}>
-            <Stack direction={"row"} spacing={2}>
+            {/* avatar card */}
+            <Stack direction={"row"} spacing={2} sx={{alignItems: "center"}}>
+                <AvatarCard avatar={avatar} />
                 <Typography>{name}</Typography>  
-                {newMessageAlert && <Typography>{newMessageAlert.count} New Message</Typography>}  
+                {/* {newMessageAlert && <Typography>{newMessageAlert.count} New Message</Typography>}   */}
             </Stack>
             {isOnline && <Box sx={{
                 width: 10,
@@ -39,11 +47,12 @@ const ChatItem = ({
                 borderRadius: "50%",
                 backgroundColor: "green",
                 position: "absolute",
-                top: 0,
-                right: 0,
-            }} />} 
+                top: "10",
+                right: 10,
+            }} 
+            />} 
         </div>
-    </Link>
+    </StyledLink>
   );
 };
 

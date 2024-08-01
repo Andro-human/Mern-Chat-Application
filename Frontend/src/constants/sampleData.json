@@ -1,9 +1,206 @@
-[
+{
+  "conversations": [
     {
-    "avatar": ["https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"],
-    "name": "John Doe",
-    "_id": "1",
-    "groupChat": "false",
-    "members": ["1", "2"]
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe",
+      "_id": "1",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "2",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "3",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 4",
+      "_id": "4",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "5",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "6",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "7",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "8",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "9",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "10",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "11",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "12",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "13",
+      "groupChat": "false",
+      "members": ["3", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 2",
+      "_id": "14",
+      "groupChat": "false",
+      "members": ["1", "2"]
+    },
+    {
+      "avatar": [
+        "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+      ],
+      "name": "John Doe 3",
+      "_id": "15",
+      "groupChat": "false",
+      "members": ["3", "2"]
     }
-]
+  ],
+  "messages": [
+    {
+      "attachments": [
+        {
+          "public_id": "asdsad",
+          "url": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+        }
+      ],
+      "content": "Hello",
+      "_id": "1",
+      "sender": {
+        "_id": "gfsdkl",
+        "name": "John Doe2"
+      },
+      "chat": "chatId",
+      "createdAt": "2021-09-01T00:00:00.000Z"
+    },
+    {
+      "attachments": [
+        {
+          "public_id": "asdsad",
+          "url": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+        }
+      ],
+      "content": "Hello2",
+      "_id": "2",
+      "sender": {
+        "_id": "1",
+        "name": "John Doe2"
+      },
+      "chat": "chatId",
+      "createdAt": "2021-09-01T00:00:00.000Z"
+    },
+    {
+      "attachments": [
+        {
+          "public_id": "asdsad",
+          "url": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg"
+        }
+      ],
+      "content": "Hellodfsafdaffasdffgsdgsggsdgsdf3Hellodfsafdaffasdffgsdgsggsdgsdf3Hellodfsafdaffasdffgsdgsggs",
+      "_id": "3",
+      "sender": {
+        "_id": "user.id",
+        "name": "John Doe3"
+      },
+      "chat": "chatId",
+      "createdAt": "2021-09-01T00:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "avatar": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg",
+      "name": "Animesh Sinha",
+      "_id": "1"
+    },
+    {
+      "avatar": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg",
+      "name": "Muskan Chauhan",
+      "_id": "2"
+    },
+    {
+      "avatar": "https://pbs.twimg.com/profile_images/1555432600323428354/9xkQ6z8Y_400x400.jpg",
+      "name": "John Doe 3",
+      "_id": "3"
+    }
+  ]
+}

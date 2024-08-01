@@ -47,4 +47,8 @@ const uploadFilesToCloudinary = async (files = []) => {
   }
 };
 
-module.exports = { sendToken, uploadFilesToCloudinary };
+const emitEvent = (req, event, users, data) => {
+  console.log("Emitting event:");
+}
+
+module.exports = { sendToken, uploadFilesToCloudinary, emitEvent };

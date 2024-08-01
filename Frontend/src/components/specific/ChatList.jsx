@@ -1,27 +1,28 @@
 import { Stack } from "@mui/material";
 import ChatItem from "../shared/ChatItem";
+import { height } from '@mui/system';
 
 const ChatList = ({
-  w = "100%",
-  chats = [],
-  chatId,
+  w = "100%",   
+  chats = [],     // chats array
+  chatId,   
   onlineUsers = [],
-  newMessagesAlert = [
-    {
-      chatId: "",
-      count: 0,
-    },
-  ],
+  // newMessagesAlert = [
+  //   {
+  //     chatId: "",
+  //     count: 0,
+  //   },
+  // ],
   handleDeleteChat,
 }) => {
   return (
-    <Stack width={w} direction={"column"}>
+    <Stack width={w} direction={"column"} overflow={"auto"} height={"100%"} >
       {chats?.map((data, index) => {
         const { avatar, _id, name, groupChat, members } = data;
-        console.log(avatar);
-        const newMessageAlert = newMessagesAlert.find(
-          ({ chatId }) => chatId === _id
-        );
+        // console.log(avatar);
+        // const newMessageAlert = newMessagesAlert.find(
+        //   ({ chatId }) => chatId === _id
+        // );
 
         const isOnline = members.some(({ member }) =>
           onlineUsers.includes(_id)
@@ -30,15 +31,15 @@ const ChatList = ({
         return (
           <ChatItem
             index = {index}
-            newMessageAlert={newMessageAlert}
+            // newMessageAlert={newMessageAlert}
             isOnline={isOnline}
             avatar={avatar}
             name={name}
             _id={_id}
             key={_id}
             groupChat={groupChat}
-            sameSender={_id === chatId} 
-            handleDeleteChatOpen={handleDeleteChat}
+            sameSender={chatId === _id} 
+            handleDeleteChat={handleDeleteChat}
           />
         );
       })}

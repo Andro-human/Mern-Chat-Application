@@ -6,27 +6,37 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useMediaQuery
 } from "@mui/material";
 import {
   Search as SearchIcon,
-  Add as AddIcon,
-  Group as GroupIcon,
-  Notifications as NotificationsIcon,
+  // Add as AddIcon,
+  // Group as GroupIcon,
+  // Notifications as NotificationsIcon,
+  Menu as MenuIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Search from "../specific/Search";
-import NewGroup from "../specific/NewGroup";
-import Notifications from "../specific/Notifications";
+// import NewGroup from "../specific/NewGroup";
+// import Notifications from "../specific/Notifications";
 
 const Header = () => {
   const navigate = useNavigate();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  
   const [isSearch, setIsSearch] = useState(false);
-  const [isNewGroup, setIsNewGroup] = useState(false);
-  const [isNotification, setIsNotification] = useState(false);
+  // const [isNewGroup, setIsNewGroup] = useState(false);
+  // const [isNotification, setIsNotification] = useState(false);
+  // const [isM]
 
+  const handleMobile = () => {
+    alert("Mobile Menu");
+  }
   const logoClick = () => {
     navigate("/");
   };
@@ -35,17 +45,17 @@ const Header = () => {
     setIsSearch((prev) => !prev);
   };
 
-  const openNewGroup = () => {
-    setIsNewGroup((prev) => !prev);
-  };
+  // const openNewGroup = () => {
+  //   setIsNewGroup((prev) => !prev);
+  // };
 
-  const navigateToGroup = () => {
-    navigate("/group");
-  };
+  // const navigateToGroup = () => {
+  //   navigate("/group");
+  // };
 
-  const openNotification = () => {
-    setIsNotification((prev) => !prev);
-  };
+  // const openNotification = () => {
+  //   setIsNotification((prev) => !prev);
+  // };
 
   const logoutHandler = () => {
     alert("Logout");
@@ -57,8 +67,19 @@ const Header = () => {
         <AppBar position="static" sx={{ bgcolor: "#453F3C" }}>
           <Toolbar>
             <Button sx={{ color: "white" }} onClick={logoClick}>
-              <Typography variant="h6">Chat Application</Typography>
+              <Typography variant={isMobile?"subtitle1":"h6"}>Chat Application</Typography>
             </Button>
+
+            
+            <Box
+              sx={{
+                display: { xs: "block", sm: "none" },
+              }}
+            >
+              <IconButton color="inherit" onClick={handleMobile}>
+                <MenuIcon />
+              </IconButton>
+            </Box>
 
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box>
@@ -67,7 +88,7 @@ const Header = () => {
                 icon={<SearchIcon />}
                 onClick={openSearch}
               />
-              <IconBtn
+              {/* <IconBtn
                 title="New Group"
                 icon={<AddIcon />}
                 onClick={openNewGroup}
@@ -83,7 +104,8 @@ const Header = () => {
                 title="Notifications"
                 icon={<NotificationsIcon />}
                 onClick={openNotification}
-              />
+              /> */}
+                
 
               <IconBtn
                 title="Logout"
@@ -95,8 +117,8 @@ const Header = () => {
         </AppBar>
       </Box>
       {isSearch && <Search />}
-      {isNewGroup&& <NewGroup />}
-      {isNotification && <Notifications />}
+      {/* {isNewGroup&& <NewGroup />}
+      {isNotification && <Notifications />} */}
     </>
   );
 };

@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import backgroundImage from "../assets/loginBackground.jpg";
+import backgroundImage from "../assets/loginBackground.jpeg";
 import { useState } from "react";
 
 const Login = () => {
