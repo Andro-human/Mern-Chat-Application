@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
 const { v4: uuid } = require("uuid");
+
 const sendToken = (res, user, statusCode, message) => {
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
     expiresIn: "15d",
@@ -50,5 +51,6 @@ const uploadFilesToCloudinary = async (files = []) => {
 const emitEvent = (req, event, users, data) => {
   console.log("Emitting event:");
 }
+
 
 module.exports = { sendToken, uploadFilesToCloudinary, emitEvent };
