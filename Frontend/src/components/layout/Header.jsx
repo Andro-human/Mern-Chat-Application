@@ -20,12 +20,16 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Search from "../specific/Search";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setLoading, userNotExists } from "../../redux/reducers/auth";
 // import NewGroup from "../specific/NewGroup";
 // import Notifications from "../specific/Notifications";
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
@@ -57,8 +61,24 @@ const Header = () => {
   //   setIsNotification((prev) => !prev);
   // };
 
-  const logoutHandler = () => {
-    alert("Logout");
+  const logoutHandler = async () => {
+    dispatch(setLoading(true));
+    try {
+      const {data} = await axios.get(`${import.meta.env.VITE_SERVER}/auth/logout`, {
+        withCredentials: true,
+      });
+      dispatch(userNotExists());
+      setTimeout(() => {
+        toast.success(data?.message); 
+      }, 500);
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Error Occurred during logout"
+      );
+    }
+    finally{
+    dispatch(setLoading(false));
+    }
   };
 
   return (

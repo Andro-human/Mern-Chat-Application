@@ -10,11 +10,11 @@ const newUserController = async (req, res) => {
 
     if (!file) return res.status(400).json({ message: "Please upload Avatar" });
     
-    const result = await uploadFilesToCloudinary([file]);
+    const result = await uploadFilesToCloudinary(file);
     
     const avatar = {
-      public_id: result[0].public_id,
-      url: result[0].url,
+      public_id: result.public_id,
+      url: result.secure_url,
     };
 
     // console.log(name, username, password, bio);
@@ -59,7 +59,7 @@ const loginController = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
+        message: "Invalid Credentials",
       });
     }
 
@@ -85,7 +85,6 @@ const loginController = async (req, res) => {
 const getUserController = async (req, res) => {
   try {
     const user = await userModel.findById({ _id: req.userId });
-    console.log(req.userId);
     return res.status(200).json({
       success: true,
       message: "User fectched Successfully",

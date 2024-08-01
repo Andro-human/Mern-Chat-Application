@@ -2,7 +2,7 @@ import { Stack, Typography, useMediaQuery } from "@mui/material";
 import {Chat as ChatIcon} from "@mui/icons-material"
 import {useTheme} from "@mui/material/styles";
 
-const home = () => {
+const Home = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
@@ -21,4 +21,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;

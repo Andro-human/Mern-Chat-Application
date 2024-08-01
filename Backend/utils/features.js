@@ -26,24 +26,24 @@ const getBase64 = (file) => {
   return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
 };
 
-const uploadFilesToCloudinary = async (files = []) => {
+const uploadFilesToCloudinary = async (file) => {
   try {
-    const uploadedFiles = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    // const uploadedFiles = [];
+    // for (let i = 0; i < files.length; i++) {
+      // const file = files[i];
       const uploadedFile = await cloudinary.uploader.upload(getBase64(file), {
         resource_type: "auto",
         public_id: uuid(),
         folder: "Images",
       });
-      uploadedFiles.push({
-        public_id: uploadedFile.public_id,
-        url: uploadedFile.secure_url,
-      });
-    }
-    return uploadedFiles;
+      // uploadedFiles.push({
+      //   public_id: uploadedFile.public_id,
+      //   url: uploadedFile.secure_url,
+      // });
+    // }
+    return uploadedFile;
   } catch (error) {
-    console.error("Detailed error in uploading files to Cloudinary:", error);
+    // console.error("Detailed error in uploading files to Cloudinary:", error);
     throw new Error("Error in uploading files to cloudinary", error);
   }
 };

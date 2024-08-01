@@ -6,11 +6,29 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import NotFound from './pages/NotFound';
 import AppLayout from './components/layout/AppLayout';
 import Chat from './pages/Chat';
-
-let user = false;
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userExists, userNotExists } from './redux/reducers/auth';
+import Loader from './components/shared/Loader';
+import { Toaster } from 'react-hot-toast';
+// let user = false;
 
 const App = () => {
-  return (
+
+  const {user, isLoading } = useSelector((state) => state.auth); 
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_SERVER}/auth/profile`, {
+      withCredentials: true,
+    })
+        .then(({data}) => dispatch(userExists(data.user)))
+        .catch(() => dispatch(userNotExists()))
+  }, [dispatch])
+
+  return isLoading? <Loader />: (
     <Router> 
         <Routes>
           <Route element={<PrivateRoute user={user} redirect='/login' /> } > 
@@ -27,6 +45,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
 
+        <Toaster postition="bottom-center" />
     </Router>    
   )
 }

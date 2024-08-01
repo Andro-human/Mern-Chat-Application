@@ -38,13 +38,16 @@ const io = new Server(server, {});
 app.use(express.json()); // Parse JSON bodies
 
 app.use(cookieParser()); // Parse cookies
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+})); // Enable CORS
 app.use(morgan("dev")); // Log HTTP requests
 
-app.use("/api/auth", require("./routes/authRoutes")); // Auth routes
-app.use("/api/message", require("./routes/messageRoutes")); // Message routes
-app.use("/api/users", require("./routes/userRoutes")); // User routes
-app.use("/api/conversations", require("./routes/conversationRoutes")); // Conversation routes
+app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
+app.use("/api/v1/message", require("./routes/messageRoutes")); // Message routes
+app.use("/api/v1/users", require("./routes/userRoutes")); // User routes
+app.use("/api/v1/conversations", require("./routes/conversationRoutes")); // Conversation routes
 
 const PORT = process.env.PORT || 8080;
 
