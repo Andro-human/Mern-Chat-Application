@@ -1,4 +1,4 @@
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField} from "@mui/material";
 import { Stack } from "@mui/system";
 import { Send as SendIcon } from "@mui/icons-material";
 import sampleData from "../constants/sampleData.json";
@@ -13,6 +13,7 @@ const Chat = () => {
   // const containerRef = userRef(null);
   return (
     <>
+    {/* <Toolbar sx={{bgcolor:"#453F3C"}}></Toolbar> */}
       <Stack
         direction={"column"}
         bgcolor={"rgba(17, 27, 33, .2)"}

@@ -9,31 +9,63 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserItem from "../shared/UserItem";
-import sampleData from "../../constants/sampleData.json";
+// import sampleData from "../../constants/sampleData.json";
+import { useDispatch, useSelector } from "react-redux";
+import { setisSearch } from "../../redux/reducers/misc";
+import { useLazySearchUserQuery, useMyConversationsQuery } from "../../redux/api/api";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isSearch } = useSelector((state) => state.misc);
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState(sampleData.users);
-  // const [open, setOpen] = useState(true);
+  const [users, setUsers] = useState([]);
+
+  const [ searchUser ] = useLazySearchUserQuery(search);
+  const { refetch } = useMyConversationsQuery("");
+  // console.log(search)
+  // const [isSearch] = useLazySearchUserQuery()
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      // dispatch(setisSearch(true));
+      searchUser(search)
+        .then(({ data }) => setUsers(data.users))
+        .catch((e) => console.log(e));
+      // .catch(e) => console.log(e);
+    }, 1000);
+    return () => clearTimeout(timeOutId); // Cleanup function to clear the timeout
+  }, [search, searchUser]);
 
   // console.log(open)
-  let isLoadingStartConvo = false;
+  // let isLoadingStartConvo = false;
   const startconversationHandler = (id) => {
-    alert(`Start conversation with ${id}`);
+    // alert(`Start conversation with ${id}`);
+    axios.post(`${import.meta.env.VITE_SERVER}/conversations/create`, { otherMemberId: id },
+    { withCredentials: true }
+    )
+    .then((res) => {
+      const conversationId = res.data.conversation._id;
+      navigate(`/chat/${conversationId}`);
+      dispatch(setisSearch(false));
+      refetch();
+    })
+    .catch ((e) => console.log(e));
   };
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  // }
+  const handleClose = () => {
+    dispatch(setisSearch(false));
+  };
   return (
     <Dialog
-      open={open}
-      // onClose={handleClose}
+      open={isSearch}
+      onClose={handleClose}
       // BackdropProps={{
       //   onClick: { handleClose }, // Closes dialog when clicking on the backdrop
       // }}
@@ -65,7 +97,6 @@ const Search = () => {
               user={user}
               key={user._id}
               handler={startconversationHandler}
-              handlerIsLoading={isLoadingStartConvo}
             />
           ))}
         </List>

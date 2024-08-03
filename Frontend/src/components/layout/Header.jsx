@@ -6,7 +6,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import {
   Search as SearchIcon,
@@ -17,67 +17,62 @@ import {
   Logout as LogoutIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Search from "../specific/Search";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading, userNotExists } from "../../redux/reducers/auth";
+import { setisMobile, setisSearch } from "../../redux/reducers/misc";
+import { useTheme } from "@mui/material/styles";
 // import NewGroup from "../specific/NewGroup";
 // import Notifications from "../specific/Notifications";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   
-  const [isSearch, setIsSearch] = useState(false);
+  const theme = useTheme();
+  const heading = useMediaQuery(theme.breakpoints.down("sm"));
+  
+  const {isSearch} = useSelector((state) => state.misc);
+
   // const [isNewGroup, setIsNewGroup] = useState(false);
   // const [isNotification, setIsNotification] = useState(false);
   // const [isM]
 
   const handleMobile = () => {
-    alert("Mobile Menu");
-  }
+    dispatch(setisMobile(true));
+  };
+
   const logoClick = () => {
     navigate("/");
   };
 
   const openSearch = () => {
-    setIsSearch((prev) => !prev);
+    dispatch(setisSearch(true));
+    // setIsSearch((prev) => !prev);
   };
-
-  // const openNewGroup = () => {
-  //   setIsNewGroup((prev) => !prev);
-  // };
-
-  // const navigateToGroup = () => {
-  //   navigate("/group");
-  // };
-
-  // const openNotification = () => {
-  //   setIsNotification((prev) => !prev);
-  // };
 
   const logoutHandler = async () => {
     dispatch(setLoading(true));
     try {
-      const {data} = await axios.get(`${import.meta.env.VITE_SERVER}/auth/logout`, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER}/auth/logout`,
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(userNotExists());
       setTimeout(() => {
-        toast.success(data?.message); 
+        toast.success(data?.message);
       }, 500);
     } catch (error) {
       toast.error(
         error?.response?.data?.message || "Error Occurred during logout"
       );
-    }
-    finally{
-    dispatch(setLoading(false));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -86,12 +81,7 @@ const Header = () => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" sx={{ bgcolor: "#453F3C" }}>
           <Toolbar>
-            <Button sx={{ color: "white" }} onClick={logoClick}>
-              <Typography variant={isMobile?"subtitle1":"h6"}>Chat Application</Typography>
-            </Button>
-
-            
-            <Box
+          <Box
               sx={{
                 display: { xs: "block", sm: "none" },
               }}
@@ -100,6 +90,14 @@ const Header = () => {
                 <MenuIcon />
               </IconButton>
             </Box>
+
+            <Button sx={{ color: "white" }} onClick={logoClick}>
+              <Typography variant={heading ? "subtitle1" : "h6"}>
+                Chat Application
+              </Typography>
+            </Button>
+
+            
 
             <Box sx={{ flexGrow: 1 }}></Box>
             <Box>
@@ -125,7 +123,6 @@ const Header = () => {
                 icon={<NotificationsIcon />}
                 onClick={openNotification}
               /> */}
-                
 
               <IconBtn
                 title="Logout"

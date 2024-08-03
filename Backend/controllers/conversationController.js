@@ -12,12 +12,12 @@ const getMyConversations = async (req, res) => {
         members: { $in: [userId] },
       })
       .populate("members", "name avatar");
-
+      
     const transformedConversations = conversations.map(
-      ({ _id, name, members }) => {
+      ({ _id, members }) => {
         //    console.log(members);
         const otherMember = members.filter(
-          (member) => member._id.toString() !== userId
+          (member) => member._id.toString() !== userId.toString()
         );
 
         return {

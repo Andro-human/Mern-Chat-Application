@@ -53,15 +53,16 @@ const Login = () => {
           headers: { "Content-Type": "application/json" }, // set the headers so that the server knows what type of data is being sent
         }
       );
-
-      dispatch(userExists(true));
+      dispatch(userExists(data?.user));
       setTimeout(() => {
         toast.success(data?.message);
       }, 500);
     } catch (error) {
-      toast.error(
-        error?.response?.data?.message || "Error Occurred during login"
-      );
+      setTimeout(() => {
+        toast.error(
+          error?.response?.data?.message || "Error Occurred during login"
+        );
+      }, 500);
     } finally {
       dispatch(setLoading(false));
     }
@@ -88,7 +89,7 @@ const Login = () => {
         }
       );
 
-      dispatch(userExists(true));
+      dispatch(userExists(data?.user));
       setTimeout(() => {
         toast.success(data?.message);
       }, 500);
