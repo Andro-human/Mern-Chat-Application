@@ -47,7 +47,7 @@ app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser()); // Parse cookies
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
     credentials: true,
   })
 ); // Enable CORS
