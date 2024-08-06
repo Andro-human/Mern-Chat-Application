@@ -48,9 +48,11 @@ app.use(cookieParser()); // Parse cookies
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
-); // Enable CORS
+);// Enable CORS
 app.use(morgan("dev")); // Log HTTP requests
 
 app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
