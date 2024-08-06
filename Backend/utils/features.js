@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
 const { v4: uuid } = require("uuid");
-const { userSocketIDs, getSockets } = require("../server.js");
+// const { userSocketIDs, getSockets } = require("../server.js");
 
 const sendToken = (res, user, statusCode, message) => {
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {

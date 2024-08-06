@@ -130,11 +130,11 @@ server.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`);
 });
 
-const getSockets = (users = []) => {
-  console.log("users: ", userSocketIDs);
-  const sockets = users.map((user) => userSocketIDs.get(user.toString()));
+// const getSockets = (users = []) => {
+//   console.log("users: ", userSocketIDs);
+//   const sockets = users.map((user) => userSocketIDs.get(user.toString()));
 
-  return sockets;
-};
+//   return sockets;
+// };
 
-module.exports = {getSockets };
+// module.exports = {getSockets };
