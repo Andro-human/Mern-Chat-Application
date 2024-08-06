@@ -28,7 +28,7 @@ import { useTheme } from "@mui/material/styles";
 // import NewGroup from "../specific/NewGroup";
 // import Notifications from "../specific/Notifications";
 
-const Header = () => {
+const Header = ({socket}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
@@ -58,12 +58,13 @@ const Header = () => {
     dispatch(setLoading(true));
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER}/auth/logout`,
+        `${import.meta.env.VITE_SERVER}api/v1/auth/logout`,
         {
           withCredentials: true,
         }
       );
       dispatch(userNotExists());
+      socket.disconnect();
       setTimeout(() => {
         toast.success(data?.message);
       }, 500);

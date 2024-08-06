@@ -15,7 +15,7 @@ const getMyConversations = async (req, res) => {
       
     const transformedConversations = conversations.map(
       ({ _id, members }) => {
-        //    console.log(members);
+           console.log("members", members);
         const otherMember = members.filter(
           (member) => member._id.toString() !== userId.toString()
         );
@@ -46,19 +46,12 @@ const getMyConversations = async (req, res) => {
 
 const getConversationDetails = async (req, res) => {
   try {
-    const { id: receiverId } = req.params;
-    const senderId = req.userId;
-    if (receiverId === senderId) {
-      return res.status(400).json({
-        success: false,
-        message: "Sender and receiver cannot be the same",
-      });
-    }
+    const { id: conversationId } = req.params;
+    // const senderId = req.userId;
+    
     if (req.query.populate === "true") {
       const conversation = await conversationModel
-        .findOne({
-          members: { $all: [senderId, receiverId] },
-        })
+        .findById(conversationId)
         .populate("members", "name avatar")
         .lean(); // lean() is used to convert the mongoose object to plain javascript object
 
@@ -85,9 +78,8 @@ const getConversationDetails = async (req, res) => {
         conversation,
       });
     } else {
-      const conversation = await conversationModel.findOne({
-        members: { $all: [senderId, receiverId] },
-      });
+      const conversation = await conversationModel.findById(conversationId);
+      console.log("here", conversation);
       if (!conversation) {
         return res.status(404).json({
           success: false,
@@ -104,7 +96,7 @@ const getConversationDetails = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "Error in getMessages API",
+      message: "Error in fetching conversation details",
       error,
     });
   }
@@ -142,6 +134,7 @@ const createConversation = async (req, res) => {
       members: [senderId, otherMemberId],    
     });
 
+    emitEvent(req, "refetchChats");
     return res.status(201).json({
       success: true,
       message: "Conversation created successfully",
@@ -170,7 +163,8 @@ const deleteConversation = async (req, res) => {
     }
 
     const members = conversation.members;
-
+    console.log("conversation", conversation);
+    console.log(req.userId);
     if (!members.includes(req.userId)) {
       return res.status(403).json({
         success: false,
@@ -184,7 +178,9 @@ const deleteConversation = async (req, res) => {
       conversationModel.findByIdAndDelete(id),
     ]);
 
-    emitEvent(req, "REFETCH_CHATS", members);
+    emitEvent(req, "refetchChats");
+     
+
     return res.status(200).json({
       success: true,
       message: "Conversation deleted successfully",

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const cloudinary = require("cloudinary").v2;
 const { v4: uuid } = require("uuid");
+const { userSocketIDs, getSockets } = require("../server.js");
 
 const sendToken = (res, user, statusCode, message) => {
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -30,16 +31,16 @@ const uploadFilesToCloudinary = async (file) => {
   try {
     // const uploadedFiles = [];
     // for (let i = 0; i < files.length; i++) {
-      // const file = files[i];
-      const uploadedFile = await cloudinary.uploader.upload(getBase64(file), {
-        resource_type: "auto",
-        public_id: uuid(),
-        folder: "Images",
-      });
-      // uploadedFiles.push({
-      //   public_id: uploadedFile.public_id,
-      //   url: uploadedFile.secure_url,
-      // });
+    // const file = files[i];
+    const uploadedFile = await cloudinary.uploader.upload(getBase64(file), {
+      resource_type: "auto",
+      public_id: uuid(),
+      folder: "Images",
+    });
+    // uploadedFiles.push({
+    //   public_id: uploadedFile.public_id,
+    //   url: uploadedFile.secure_url,
+    // });
     // }
     return uploadedFile;
   } catch (error) {
@@ -48,9 +49,13 @@ const uploadFilesToCloudinary = async (file) => {
   }
 };
 
-const emitEvent = (req, event, users, data) => {
-  console.log("Emitting event:");
-}
-
+const emitEvent = (req, event, data) => {
+  const io = req.app.get("io");
+  // console.log(io);
+  // console.log("userIdhow?: ", userSocketIDs);
+  // const usersSocket = getSockets(users);
+  // console.log("usersSocket: ", usersSocket);
+  io.emit(event, data);
+};
 
 module.exports = { sendToken, uploadFilesToCloudinary, emitEvent };

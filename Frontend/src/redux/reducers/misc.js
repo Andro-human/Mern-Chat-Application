@@ -4,9 +4,7 @@ const initialState = {
   isMobile: false,
   isSearch: false,
   isDeleteMenu: false,
-  selectedDeleteConversation: {
-    conversationId: "",
-  },
+  selectedDeleteConversation: ""
 };
 
 const miscSlice = createSlice({

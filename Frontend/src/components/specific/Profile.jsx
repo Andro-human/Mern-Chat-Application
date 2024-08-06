@@ -8,7 +8,6 @@ const Profile = ({ user }) => {
     alert("Back Button");
   }
 
-  console.log("user: ", user);
 
   return (
     <>

@@ -14,6 +14,7 @@ const {
   createUser,
 } = require("./seeders/fakeDataCreator");
 const messageModel = require("./models/messageModel");
+const socketAuth = require("./middlewares/socketAuth");
 
 dotenv.config();
 connectDB();
@@ -30,18 +31,26 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
 const app = express();
 const server = createServer(app, {});
-const io = new Server(server, {});
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
+});
 // app.set("socketio", io);
-
+app.set("io", io);
 app.use(express.json()); // Parse JSON bodies
 
 app.use(cookieParser()); // Parse cookies
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-})); // Enable CORS
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+); // Enable CORS
 app.use(morgan("dev")); // Log HTTP requests
 
 app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
@@ -52,24 +61,28 @@ app.use("/api/v1/conversations", require("./routes/conversationRoutes")); // Con
 const PORT = process.env.PORT || 8080;
 
 io.use((socket, next) => {
-  next();
-})
+  cookieParser()(socket.request, socket.request.res, async (err) => {
+    await socketAuth(err, socket, next);
+  });
+  // next();
+});
 
 io.on("connection", (socket) => {
-  const user = { _id: "435424", name: "John Doe" };
+  const user = socket.user;
+  console.log("A user Connected", user);
   userSocketIDs.set(user._id.toString(), socket.id);
-  console.log(userSocketIDs);
+  console.log("userSocketIDs: ", userSocketIDs);
 
   // socket.on("joinRoom", (room) => {
   //   socket.join(room);
   //   console.log(`A user joined room ${room}`);
   // });
-
-  socket.on("sendMessage", async ({ conversationId, message, member }) => {
+  io.emit("onlineUsers", { userIDs: Array.from(userSocketIDs.keys()) });
+  socket.on("sendMessage", async ({ conversationId, message, members }) => {
     const newMessage = {
       message,
       _id: uuid(),
-      sender: { _id: user._id, name: user.name },
+      senderId: { _id: user._id, name: user.name },
       conversation: conversationId,
       createdAt: new Date().toISOString(),
     };
@@ -80,27 +93,48 @@ io.on("connection", (socket) => {
       conversationId,
     };
 
+    console.log("New message:", members);
     // Emit event to all members of the conversation
-    const memberSocket = userSocketIDs.get(member._id.toString());
+    const memberSocket = members.map((member) => userSocketIDs.get(member));
 
-    io.to(memberSocket).emit("NEW_MESSAGE", {
+    io.to(memberSocket).emit("newMessage", {
       conversationId,
       message: newMessage,
     });
 
     try {
-      await messageModel.create(messageForDb); 
+      await messageModel.create(messageForDb);
     } catch (error) {
-      console.error("Error in saving message to db:", error)
+      console.error("Error in saving message to db:", error);
     }
+  });
+
+  socket.on("typing", ({ conversationId, members }) => {
+    const memberSocket = members.map((member) => userSocketIDs.get(member));
+    socket.to(memberSocket).emit("typing", { conversationId });
+    // console.log("startTyping", conversationId);
+  });
+  socket.on("stopTyping", ({ conversationId, members }) => {
+    const memberSocket = members.map((member) => userSocketIDs.get(member));
+    socket.to(memberSocket).emit("stopTyping", { conversationId });
+    // console.log("stopTyping", conversationId);
   });
 
   socket.on("disconnect", () => {
     console.log("A user disconnected");
     userSocketIDs.delete(user._id.toString());
+    io.emit("onlineUsers", { userIDs: Array.from(userSocketIDs.keys()) });
   });
 });
-
 server.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`);
 });
+
+const getSockets = (users = []) => {
+  console.log("users: ", userSocketIDs);
+  const sockets = users.map((user) => userSocketIDs.get(user.toString()));
+
+  return sockets;
+};
+
+module.exports = {getSockets };

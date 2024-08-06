@@ -1,5 +1,5 @@
 const userModel = require("../models/userModel");
-const {sendToken, uploadFilesToCloudinary} = require("../utils/features");
+const {sendToken, uploadFilesToCloudinary, emitEvent} = require("../utils/features");
 const bcrypt = require("bcryptjs");
 // create a new user and save it to the database and save in cookie
 const newUserController = async (req, res) => {
@@ -40,6 +40,8 @@ const newUserController = async (req, res) => {
     });
 
     sendToken(res, user, 201, "User created successfully");
+    emitEvent(req, "refetchChats");
+
     // res.status(201).json(user);
   } catch (error) {
     console.log(error);
@@ -72,6 +74,7 @@ const loginController = async (req, res) => {
     }
 
     sendToken(res, user, 201, `Welcome back, ${user.name}`);
+    emitEvent(req, "refetchChats");
   } catch (error) {
     console.log(error);
     res.status(500).json({

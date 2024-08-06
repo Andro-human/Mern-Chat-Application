@@ -47,7 +47,7 @@ const Search = () => {
   // let isLoadingStartConvo = false;
   const startconversationHandler = (id) => {
     // alert(`Start conversation with ${id}`);
-    axios.post(`${import.meta.env.VITE_SERVER}/conversations/create`, { otherMemberId: id },
+    axios.post(`${import.meta.env.VITE_SERVER}api/v1/conversations/create`, { otherMemberId: id },
     { withCredentials: true }
     )
     .then((res) => {

@@ -43,7 +43,7 @@ const Login = () => {
     dispatch(setLoading(true));
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER}/auth/login`,
+        `${import.meta.env.VITE_SERVER}api/v1/auth/login`,
         {
           username: username,
           password: password,
@@ -81,7 +81,7 @@ const Login = () => {
     dispatch(setLoading(true));
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER}/auth/new`,
+        `${import.meta.env.VITE_SERVER}api/v1/auth/new`,
         formData,
         {
           withCredentials: true,

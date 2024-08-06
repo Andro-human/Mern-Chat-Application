@@ -21,7 +21,7 @@ const ChatItem = ({
   sameSender = true,
   isOnline,
 //   newMessageAlert,
-  index = 0,
+  // index = 0,
   handleDeleteChat,
 }) => {
   return (
@@ -56,4 +56,4 @@ const ChatItem = ({
   );
 };
 
-export default memo(ChatItem);              // this won't be called until any prop changes
+export default ChatItem;              // this won't be called until any prop changes

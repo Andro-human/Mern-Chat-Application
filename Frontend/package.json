@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
     "@reduxjs/toolkit": "^2.2.7",
+    "6pp": "^1.2.16",
     "async": "^3.2.5",
     "axios": "^1.7.2",
     "helmet": "^7.1.0",
