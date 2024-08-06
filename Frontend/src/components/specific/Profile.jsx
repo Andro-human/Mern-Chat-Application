@@ -12,9 +12,9 @@ const Profile = ({ user }) => {
   return (
     <>
         {/* <Toolbar sx={{bgcolor:"#453F3C"}}></Toolbar> */}
-    <Tooltip title={"Close"}> 
+    {/* <Tooltip title={"Close"}> 
       <IconButton sx={{position: "relative", margin:"0.3rem"}} onClick={backButton} ><BackIcon sx={{ color: 'white' }} /></IconButton>
-    </Tooltip>
+    </Tooltip> */}
     <Stack spacing={"2rem"} alignItems={"center"} margin={"2rem"}>
       <Avatar
         src={user?.avatar?.url || "https://www.w3schools.com/howto/img_avatar.png"}
