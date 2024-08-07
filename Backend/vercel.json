@@ -12,7 +12,7 @@
       "dest": "server.js",
       "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       "headers": {
-        "Access-Control-Allow-Origin": ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
+        "Access-Control-Allow-Origin": "http://localhost:5173",
         "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization"
       }
