@@ -60,7 +60,11 @@ app.use(
   cors(corsOptions)
 );// Enable CORS
 app.use(morgan("dev")); // Log HTTP requests
-app.options("*", cors(corsOptions));
+// app.options("*", cors(corsOptions));
+app.options("/api/v1/auth", cors(corsOptions));
+app.options("/api/v1/message", cors(corsOptions));
+app.options("/api/v1/users", cors(corsOptions));
+app.options("/api/v1/conversations", cors(corsOptions));
 
 
 app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
