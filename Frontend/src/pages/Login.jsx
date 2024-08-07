@@ -71,6 +71,10 @@ const Login = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
+    if (!avatar) {
+      toast.error("Please Upload an Avatar")
+      return;
+    }
     const formData = new FormData(); // using formData becuase we are handling file uploads(avatar)
     formData.append("avatar", avatar);
     formData.append("name", name);
@@ -94,9 +98,12 @@ const Login = () => {
         toast.success(data?.message);
       }, 500);
     } catch (error) {
-      toast.error(
-        error?.response?.data?.message || "Error Occurred during SignUp"
-      );
+      setTimeout(() => {
+        toast.error(
+          error?.response?.data?.message || "Error Occurred during SignUp"
+        );
+      }, 500);
+      
     } finally {
       dispatch(setLoading(false));
     }
