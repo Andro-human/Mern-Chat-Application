@@ -31,6 +31,12 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const corsOptions = {
+  origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
 const app = express();
 const server = createServer(app, {});
@@ -42,20 +48,20 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+
+
+
 // app.set("socketio", io);
 app.set("io", io);
 app.use(express.json()); // Parse JSON bodies
 
 app.use(cookieParser()); // Parse cookies
 app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
+  cors(corsOptions)
 );// Enable CORS
 app.use(morgan("dev")); // Log HTTP requests
+app.options("*", cors(corsOptions));
+
 
 app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
 app.use("/api/v1/message", require("./routes/messageRoutes")); // Message routes
