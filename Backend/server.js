@@ -21,6 +21,7 @@ connectDB();
 
 const userSocketIDs = new Map();
 
+// To generate sample data
 // createSampleMessages(10);
 // createUser(10);
 // createSampleConversation(10);
@@ -50,7 +51,6 @@ const io = new Server(server, {
 });
 
 
-
 // app.set("socketio", io);
 app.set("io", io);
 app.use(express.json()); // Parse JSON bodies
@@ -59,13 +59,9 @@ app.use(cookieParser()); // Parse cookies
 app.use(
   cors(corsOptions)
 );// Enable CORS
-app.use(morgan("dev")); // Log HTTP requests
-// app.options("*", cors(corsOptions));
-app.options("/api/v1/auth", cors(corsOptions));
-app.options("/api/v1/message", cors(corsOptions));
-app.options("/api/v1/users", cors(corsOptions));
-app.options("/api/v1/conversations", cors(corsOptions));
 
+
+app.use(morgan("dev")); // Log HTTP requests
 
 app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
 app.use("/api/v1/message", require("./routes/messageRoutes")); // Message routes
@@ -85,12 +81,8 @@ io.on("connection", (socket) => {
   const user = socket.user;
   console.log("A user Connected", user);
   userSocketIDs.set(user._id.toString(), socket.id);
-  console.log("userSocketIDs: ", userSocketIDs);
 
-  // socket.on("joinRoom", (room) => {
-  //   socket.join(room);
-  //   console.log(`A user joined room ${room}`);
-  // });
+
   io.emit("onlineUsers", { userIDs: Array.from(userSocketIDs.keys()) });
   socket.on("sendMessage", async ({ conversationId, message, members }) => {
     const newMessage = {
@@ -126,12 +118,10 @@ io.on("connection", (socket) => {
   socket.on("typing", ({ conversationId, members }) => {
     const memberSocket = members.map((member) => userSocketIDs.get(member));
     socket.to(memberSocket).emit("typing", { conversationId });
-    // console.log("startTyping", conversationId);
   });
   socket.on("stopTyping", ({ conversationId, members }) => {
     const memberSocket = members.map((member) => userSocketIDs.get(member));
     socket.to(memberSocket).emit("stopTyping", { conversationId });
-    // console.log("stopTyping", conversationId);
   });
 
   socket.on("disconnect", () => {
@@ -143,12 +133,3 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`);
 });
-
-// const getSockets = (users = []) => {
-//   console.log("users: ", userSocketIDs);
-//   const sockets = users.map((user) => userSocketIDs.get(user.toString()));
-
-//   return sockets;
-// };
-
-// module.exports = {getSockets };
