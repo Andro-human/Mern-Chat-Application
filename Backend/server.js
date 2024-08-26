@@ -41,24 +41,22 @@ const corsOptions = {
 
 const app = express();
 const server = createServer(app, {});
+
+app.use(
+  cors(corsOptions)
+);// Enable CORS
+
 const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  },
+  cors: corsOptions,
 });
 
+app.options('*', cors(corsOptions));
 
 // app.set("socketio", io);
 app.set("io", io);
 app.use(express.json()); // Parse JSON bodies
 
 app.use(cookieParser()); // Parse cookies
-app.use(
-  cors(corsOptions)
-);// Enable CORS
 
 
 app.use(morgan("dev")); // Log HTTP requests
