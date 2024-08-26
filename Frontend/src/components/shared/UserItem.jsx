@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Avatar, Box, IconButton, ListItem, Stack, Typography } from "@mui/material";
+import { Avatar, IconButton, ListItem, Stack, Typography } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 
 const UserItem = ({ user, handler }) => {

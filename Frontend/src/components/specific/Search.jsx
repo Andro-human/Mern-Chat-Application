@@ -33,9 +33,6 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [searchUser] = useLazySearchUserQuery(search);
   const { refetch } = useMyConversationsQuery("");
-  // console.log(search)
-  // const [isSearch] = useLazySearchUserQuery()
-  console.log("In Search component");
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {

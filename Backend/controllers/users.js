@@ -6,14 +6,6 @@ const searchUser = async (req, res) => {
     const { name = "" } = req.query;
     const loggedInUser = req.userId;
 
-    if (name === "") {
-      return res.status(200).json({
-        success: true,
-        message: "Users fetched Successfully",
-        users: [],
-      });
-    }
-
       // Find all conversations where loggedInUser is a member
     const myConversations = await conversationModel.find({
       members: { $in: [loggedInUser] },
@@ -24,6 +16,28 @@ const searchUser = async (req, res) => {
       (conversation) => conversation.members
     ).flat();     // flat is used to convert 2D array to 1D array
     
+    // get all the users that are not in myConversations
+    if (name === "") {
+      const allUsersExceptUsersFromExistingConversations = await userModel.find({
+        _id: { $nin: usersFromExistingConversations },
+      })
+      
+      const users = allUsersExceptUsersFromExistingConversations.map(({_id, name,avatar}) => ({
+        _id,
+        name,
+        avatar: avatar.url
+      }))
+
+      return res.status(200).json({
+        success: true,
+        message: "Users fetched Successfully",
+        users,
+        // allUsersExceptUsersFromExistingConversations
+      });
+
+    }
+
+    // apply name condition
     const allUsersExceptUsersFromExistingConversations = await userModel.find({
       _id: { $nin: usersFromExistingConversations },
       name: { $regex: name, $options: "i" },        // i is for case insensitive
