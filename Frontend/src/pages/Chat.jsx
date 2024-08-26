@@ -1,4 +1,4 @@
-import { Box, IconButton, TextField, useForkRef } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Send as SendIcon } from "@mui/icons-material";
 import MessageComponent from "../components/shared/MessageComponent";
@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useInfiniteScrollTop } from "6pp";
-import {TypingLoader, Loader} from '../components/shared/Loader';
+import { TypingLoader } from "../components/shared/Loader";
 
 const Chat = () => {
   const containerRef = useRef(null);
@@ -31,14 +31,12 @@ const Chat = () => {
   const [userTyping, setUserTyping] = useState(false);
   const typingTimeout = useRef(null);
   const {
-    isLoading: isLoadingConversation,
     data: conversationData,
     isError: isErrorConversation,
     error: errorConversation,
   } = useConversationDetailsQuery({ conversationId, skip: !conversationId });
 
   const {
-    // isLoading: isLoadingMessages,
     data: oldMessagesData,
     isError: isErrorMessages,
     error: errorMessages,
@@ -76,7 +74,7 @@ const Chat = () => {
       socket.emit("typing", { conversationId, members });
       setIsTyping(true);
     }
-    
+
     if (typingTimeout.current) clearTimeout(typingTimeout.current);
     typingTimeout.current = setTimeout(() => {
       socket.emit("stopTyping", { conversationId, members });
@@ -147,9 +145,7 @@ const Chat = () => {
     };
   });
 
-  return isLoadingConversation ? (
-    <Loader />
-  ) : (
+  return (
     <Box
       sx={{
         display: "flex",
@@ -181,8 +177,7 @@ const Chat = () => {
         ))}
 
         {userTyping && <TypingLoader />}
-        <div ref = {bottomRef} />
-
+        <div ref={bottomRef} />
       </Stack>
 
       <form style={{ height: "10%" }} onSubmit={submitHandler}>
@@ -197,18 +192,9 @@ const Chat = () => {
               "& .MuiFilledInput-root": {
                 borderRadius: "1.5rem",
               },
-              // "& .MuiFilledInput-underline:before": {
-              //   borderBottom: "none",
-              // },
               "& .MuiFilledInput-underline:after": {
                 borderBottom: "none",
               },
-              // "& .MuiFilledInput-root:hover:before": {
-              //   borderBottom: "none",
-              // },
-              // '& .MuiFilledInput-root.Mui-focused:after': {
-              //   borderBottom: 'none',
-              // }
             }}
             value={message}
             onChange={messageOnChange}

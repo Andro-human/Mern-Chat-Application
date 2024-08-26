@@ -17,7 +17,6 @@ import {
   Logout as LogoutIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Search from "../specific/Search";
 import axios from "axios";
 import toast from "react-hot-toast";
