@@ -84,7 +84,7 @@ io.use((socket, next) => {
 
 io.on("connection", (socket) => {
   const user = socket.user;
-  console.log("A user Connected", user);
+  // console.log("A user Connected", user);
   userSocketIDs.set(user._id.toString(), socket.id);
 
 
@@ -130,7 +130,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("A user disconnected");
+    // console.log("A user disconnected");
     userSocketIDs.delete(user._id.toString());
     io.emit("onlineUsers", { userIDs: Array.from(userSocketIDs.keys()) });
   });

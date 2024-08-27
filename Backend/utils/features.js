@@ -11,7 +11,7 @@ const sendToken = (res, user, statusCode, message) => {
     .status(statusCode)
     .cookie("Login-token", token, {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: "none", // prevent csrf attacks & cross-site request forgery attacks
+      sameSite: "none",  // prevent csrf attacks & cross-site request forgery attacks
       httpOnly: true, // prevent xss attacks & cross-site scripting attacks
       secure: true,
     })
