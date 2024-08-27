@@ -109,6 +109,8 @@ const logoutController = async (req, res) => {
       // setting the cookie to none and expires to 0
       expires: new Date(0),
       httpOnly: true,
+      secure: true,
+      samesite: "none"
     });
 
     res.status(200).json({

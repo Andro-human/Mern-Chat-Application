@@ -14,7 +14,6 @@ const sendToken = (res, user, statusCode, message) => {
       sameSite: "none", // prevent csrf attacks & cross-site request forgery attacks
       httpOnly: true, // prevent xss attacks & cross-site scripting attacks
       secure: true,
-      sameSite: "none", // Ensure this matches the original setting
     })
     .json({
       success: true,
