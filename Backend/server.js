@@ -104,7 +104,7 @@ io.on("connection", (socket) => {
       conversationId,
     };
 
-    console.log("New message:", members);
+    // console.log("New message:", members);
     // Emit event to all members of the conversation
     const memberSocket = members.map((member) => userSocketIDs.get(member));
 
