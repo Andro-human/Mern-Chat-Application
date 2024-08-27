@@ -65,7 +65,7 @@ app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
 app.use("/api/v1/message", require("./routes/messageRoutes")); // Message routes
 app.use("/api/v1/users", require("./routes/userRoutes")); // User routes
 app.use("/api/v1/conversations", require("./routes/conversationRoutes")); // Conversation routes
-app.get("/api/v1/keep-alive", ()=> {          // keep alive route
+app.get("/api/v1/keep-alive", (req, res)=> {          // keep alive route
   return res.status(200).json({
     success:true,
     message: "I am alive"
