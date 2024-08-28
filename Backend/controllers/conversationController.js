@@ -15,7 +15,7 @@ const getMyConversations = async (req, res) => {
       
     const transformedConversations = conversations.map(
       ({ _id, members }) => {
-           console.log("members", members);
+          //  console.log("members", members);
         const otherMember = members.filter(
           (member) => member._id.toString() !== userId.toString()
         );
@@ -79,7 +79,6 @@ const getConversationDetails = async (req, res) => {
       });
     } else {
       const conversation = await conversationModel.findById(conversationId);
-      console.log("here", conversation);
       if (!conversation) {
         return res.status(404).json({
           success: false,
@@ -163,8 +162,6 @@ const deleteConversation = async (req, res) => {
     }
 
     const members = conversation.members;
-    console.log("conversation", conversation);
-    console.log(req.userId);
     if (!members.includes(req.userId)) {
       return res.status(403).json({
         success: false,
