@@ -33,7 +33,7 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info"],
+  origin: ["http://localhost:5173", "https://chat-app.animeshsinha.info", "https://chat-app.animeshsinha.dev"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
