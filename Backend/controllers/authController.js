@@ -10,6 +10,8 @@ const newUserController = async (req, res) => {
 
     if (!file) return res.status(400).json({ message: "Please upload Avatar" });
     
+    const existingUser = await userModel.findOne({ username });
+    
     const result = await uploadFilesToCloudinary(file);
     
     const avatar = {
@@ -19,7 +21,6 @@ const newUserController = async (req, res) => {
 
     // console.log(name, username, password, bio);
 
-    const existingUser = await userModel.findOne({ username });
 
     if (existingUser) {
       return res.status(409).json({

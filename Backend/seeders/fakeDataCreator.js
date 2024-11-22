@@ -4,6 +4,7 @@ const messageModel = require("../models/messageModel");
 const conversationModel = require("../models/conversationModel");
 // const faker = require("faker");
 
+//create users
 const createUser = async (numUsers) => {
   try {
     const userPromise = [];
@@ -30,6 +31,8 @@ const createUser = async (numUsers) => {
   }
 };
 
+
+// create conversations
 const createSampleConversation = async (numChats) => {
   try {
     const users = await userModel.find().select("_id");
@@ -54,6 +57,7 @@ const createSampleConversation = async (numChats) => {
   }
 };
 
+//create messages
 const createSampleMessages = async (userId, numMessages) => {
   try {
     const users = await userModel.find().select("_id");

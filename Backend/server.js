@@ -65,6 +65,7 @@ app.use("/api/v1/auth", require("./routes/authRoutes")); // Auth routes
 app.use("/api/v1/message", require("./routes/messageRoutes")); // Message routes
 app.use("/api/v1/users", require("./routes/userRoutes")); // User routes
 app.use("/api/v1/conversations", require("./routes/conversationRoutes")); // Conversation routes
+
 app.get("/api/v1/keep-alive", (req, res)=> {          // keep alive route
   return res.status(200).json({
     success:true,
@@ -135,6 +136,7 @@ io.on("connection", (socket) => {
     io.emit("onlineUsers", { userIDs: Array.from(userSocketIDs.keys()) });
   });
 });
+
 server.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`);
 });
