@@ -1,65 +1,61 @@
 import { Box, Typography } from "@mui/material";
 import moment from "moment";
 import { memo, useEffect, useState } from "react";
-import angry from "../../assets/emojis/angry.png";
+import anger from "../../assets/emojis/angry.png";
 import fear from "../../assets/emojis/fear.png";
 import love from "../../assets/emojis/love.png";
-import sad from "../../assets/emojis/sad.png";
+import sadness from "../../assets/emojis/sad.png";
 import surprise from "../../assets/emojis/surprise.png";
 import smile from "../../assets/emojis/smile.png";
 import axios from "axios";
 import { Loader } from "./Loader";
 
-const MessageComponent = ({ messages, user }) => {
+const MessageComponent = ({ messages, user, showEmotion }) => {
   const { senderId, message, createdAt } = messages;
   const sameSender = senderId._id === user._id;
   const timeAgo = moment(createdAt).fromNow();
 
   const [emotion, setEmotion] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [failed, setIsfailed] = useState(false);
-  console.log("messages", messages);
+  const [isProcessed, setIsProcessed] = useState(false);
+  console.log("emotion", emotion);
   const emotionEmojis = {
-    angry,
+    anger,
     fear,
     love,
-    sad,
+    sadness,
     surprise,
     smile,
   };
+
   useEffect(() => {
     // Function to call the backend API for emotion prediction
-    const fetchEmotion = async () => {
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_PYTHON_SERVER}/predict`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ sentence: message }), // Send the message content
-          }
-        );
+    if (showEmotion) {
+      const fetchEmotion = async () => {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_PYTHON_SERVER}/predict`,
+            { sentence: message },
+            { headers: { "Content-Type": "application/json" } }
+          );
 
-        const data = await response.json();
-        setEmotion(data.predicted_emotion);
-      } catch (error) {
-        console.error("Error fetching emotion:", error);
-        setIsfailed(true);
-      } finally {
-        setLoading(false);
-      }
-    };
+          const data = await response.data;
+          console.log("data", data);
+          setEmotion(data.predicted_emotion);
+          setIsProcessed(true)
+        } catch (error) {
+          console.error("Error fetching emotion:", error);
+          // setIsProcessed(false);
+        } 
+      };
 
-    fetchEmotion();
-  }, [message]); // Trigger this effect whenever the message changes
+      fetchEmotion();
+    }
+  }, [message, showEmotion]); // Trigger this effect whenever the message changes
 
   const getEmoji = (emotion) => {
     return emotionEmojis[emotion] || smile;
   };
-
-  console.log("failed", failed);
+  console.log("emotion", emotion, isProcessed);
   return (
     <Box
       style={{
@@ -72,8 +68,7 @@ const MessageComponent = ({ messages, user }) => {
         margin: "0.5rem",
         maxWidth: "55%",
         wordWrap: "break-word",
-        
-        // position: "relative",
+        position: "relative",
       }}
     >
       <div style={{ flex: 1 }}>
@@ -82,18 +77,16 @@ const MessageComponent = ({ messages, user }) => {
             {senderId.name}
           </Typography>
         )}
-        <Typography
-        >
-          {message}
-        </Typography>
+        <Typography>{message}</Typography>
         <Typography variant="caption" color={"text.secondary"} fontWeight={600}>
           {timeAgo}
         </Typography>
       </div>
 
-      {loading || failed ? null : ( // Show nothing when `failed` is true
+      {/* Image displayed based on sender */}
+     {isProcessed && 
         <img
-          src={getEmoji(emotion)} // Show the image when neither `loading` nor `failed` is true
+          src={getEmoji(emotion)}
           style={{
             height: "1.2rem",
             width: "1.2rem",
@@ -106,7 +99,7 @@ const MessageComponent = ({ messages, user }) => {
             marginLeft: sameSender ? "0" : "0.5rem", // Adjust for spacing when outside the box
           }}
         />
-      )}
+}
     </Box>
   );
 };

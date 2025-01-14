@@ -117,6 +117,7 @@ const Chat = () => {
     [conversationId]
   );
 
+  console.log("allMessages", allMessages);
   const typingListener = useCallback(
     ({ conversationId: convId }) => {
       // console.log("New message received:", message);
@@ -172,8 +173,8 @@ const Chat = () => {
           //   // backgroundImage: "linear-gradient(to bottom, var(--WDS-app-wash, var(--app-background)), var(--WDS-app-wash, var(--app-background-deeper)))"
         }}
       >
-        {allMessages.map((message) => (
-          <MessageComponent key={message._id} messages={message} user={user} />
+        {allMessages.map((message, index) => (
+          <MessageComponent key={message._id} messages={message} user={user}  showEmotion={index >= allMessages.length - 5}/>
         ))}
 
         {userTyping && <TypingLoader />}

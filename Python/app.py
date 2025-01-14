@@ -27,7 +27,9 @@ def predict_emotion(sentence):
 def predict():
     try:
         data = request.json
+        print("data", data);
         sentence = data.get("sentence")
+        print("sentence", sentence)
         if not sentence:
             return jsonify({"error": "Sentence is required"}), 400
         
