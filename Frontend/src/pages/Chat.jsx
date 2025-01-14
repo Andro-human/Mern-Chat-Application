@@ -117,7 +117,7 @@ const Chat = () => {
     [conversationId]
   );
 
-  console.log("allMessages", allMessages);
+  // console.log("allMessages", allMessages);
   const typingListener = useCallback(
     ({ conversationId: convId }) => {
       // console.log("New message received:", message);
