@@ -18,7 +18,7 @@ const MessageComponent = ({ messages, user }) => {
   const [emotion, setEmotion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [failed, setIsfailed] = useState(false);
-  console.log("emotion", emotion);
+  console.log("messages", messages);
   const emotionEmojis = {
     angry,
     fear,
@@ -27,7 +27,6 @@ const MessageComponent = ({ messages, user }) => {
     surprise,
     smile,
   };
-  console.log("python", import.meta.env.VITE_PYTHON_SERVER)
   useEffect(() => {
     // Function to call the backend API for emotion prediction
     const fetchEmotion = async () => {
@@ -44,7 +43,7 @@ const MessageComponent = ({ messages, user }) => {
         );
 
         const data = await response.json();
-        setEmotion(data.predicted_emotion); // Set the predicted emotion
+        setEmotion(data.predicted_emotion);
       } catch (error) {
         console.error("Error fetching emotion:", error);
         setIsfailed(true);
@@ -73,7 +72,8 @@ const MessageComponent = ({ messages, user }) => {
         margin: "0.5rem",
         maxWidth: "55%",
         wordWrap: "break-word",
-        position: "relative",
+        
+        // position: "relative",
       }}
     >
       <div style={{ flex: 1 }}>
@@ -82,15 +82,16 @@ const MessageComponent = ({ messages, user }) => {
             {senderId.name}
           </Typography>
         )}
-        <Typography>{message}</Typography>
+        <Typography
+        >
+          {message}
+        </Typography>
         <Typography variant="caption" color={"text.secondary"} fontWeight={600}>
           {timeAgo}
         </Typography>
       </div>
 
-      {loading ? (
-        <Loader /> // Show the loader when `loading` is true
-      ) : failed ? null : ( // Show nothing when `failed` is true
+      {loading || failed ? null : ( // Show nothing when `failed` is true
         <img
           src={getEmoji(emotion)} // Show the image when neither `loading` nor `failed` is true
           style={{

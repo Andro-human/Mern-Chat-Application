@@ -10,7 +10,7 @@ import Profile from "../specific/Profile";
 import { useMyConversationsQuery } from "../../redux/api/api";
 import {Loader} from "../shared/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { Drawer} from "@mui/material";
+import { Box, Drawer} from "@mui/material";
 import { setisDeleteMenu, setisMobile, setSelectedDeleteConversation } from "../../redux/reducers/misc";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -71,8 +71,8 @@ const handleMobileClose = () => {
 }
 
   return (
-    <>
-      {/* <Box sx={{margin:'0px'}}> */}
+    // <>
+    <Box sx={{overflow: "hidden"}}>
       <Title />
       <Header socket={socket} />
       <DeleteChat dispatch={dispatch} deleteMenuAnchor={deleteMenuAnchor}/>
@@ -127,8 +127,8 @@ const handleMobileClose = () => {
         </Grid2>
       </Grid2>
 
-      {/* </Box> */}
-    </>
+      </Box>
+    // </>
   );
 };
 
