@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useInfiniteScrollTop } from "6pp";
 import { TypingLoader } from "../components/shared/Loader";
-
+import angry from "../assets/emojis/angry.png"
 const Chat = () => {
   const containerRef = useRef(null);
   const bottomRef = useRef(null);
@@ -199,7 +199,8 @@ const Chat = () => {
             value={message}
             onChange={messageOnChange}
           />
-
+          
+          
           <IconButton type="submit" sx={{ margin: "0.1rem" }}>
             <SendIcon />
           </IconButton>
