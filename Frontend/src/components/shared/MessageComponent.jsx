@@ -79,9 +79,10 @@ const MessageComponent = ({ messages, user, showEmotion }) => {
         maxWidth: "55%",
         wordWrap: "break-word",
         position: "relative",
+        overflow: "clip",
       }}
     >
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, wordWrap: "break-word" }}>
         {!sameSender && (
           <Typography variant="caption" color={"#2694ab"} fontWeight={600}>
             {senderId.name}
