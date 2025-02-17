@@ -79,7 +79,6 @@ const MessageComponent = ({ messages, user, showEmotion }) => {
         maxWidth: "55%",
         wordWrap: "break-word",
         position: "relative",
-        overflow: "clip",
       }}
     >
       <div style={{ flex: 1, wordWrap: "break-word" }}>
@@ -99,6 +98,7 @@ const MessageComponent = ({ messages, user, showEmotion }) => {
         <div onClick={handleTooltipOpen}>
           <img
             src={getEmoji(emotion)}
+            alt="emoji"
             style={{
               height: "1.2rem",
               width: "1.2rem",
@@ -106,7 +106,7 @@ const MessageComponent = ({ messages, user, showEmotion }) => {
               position: "absolute",
               top: "50%",
               transform: "translateY(-50%)",
-              right: !sameSender ? "-2rem" : "100%",
+              right: !sameSender ? "-2rem" : "unset",
               left: !sameSender ? "unset" : "-2rem",
               marginLeft: sameSender ? "0" : "0.5rem", // Adjust for spacing when outside the box
             }}
